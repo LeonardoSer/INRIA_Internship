@@ -1,0 +1,62 @@
+import pandas as pd
+
+START_Y = 1990
+END_Y = 2018
+
+# return a string array with all years of the dataset
+def get_str_years_event():
+    return [str(year) for year in range(START_Y,END_Y+1)]
+
+# return an int array with all years of the dataset
+def get_int_years_event():
+    return [int(year) for year in range(1990,2019)]
+
+YEARS = get_str_years_event()
+
+# return an array with the total number of collaboration for each year
+def get_collabs_event():
+    file = 'myDATA/00-collaboration_df_with_starting_years.csv'
+    collaborations_df = pd.read_csv(file)
+    num_colls_by_y = []
+    tot_auth = 0
+    for i in range(len(YEARS)):
+        y = YEARS[i]
+        # total number of collaborations in the given year
+        num_colls_by_y.append(collaborations_df[y].sum())
+    return num_colls_by_y
+
+# return an array with the total number of authors for each year
+def get_auths_event():
+    file = 'myDATA/00-collaboration_df_with_starting_years.csv'
+    collaborations_df = pd.read_csv(file)
+    num_auths_by_y = []
+    num_new_auths_by_y = []
+    YEARS = [str(year) for year in range(1990,2019)]  
+    tot_auth = 0
+    for i in range(len(YEARS)):
+        y = YEARS[i]
+        
+        # number of new authors in the given year
+        num_new_auths_by_y.append(len(collaborations_df.loc[collaborations_df["start_year"] == int(y)]))
+        
+        # total number of new authors in the given year
+        tot_auth += num_new_auths_by_y[i]                         
+        num_auths_by_y.append(tot_auth)
+    return num_auths_by_y
+
+# return an array with the total number of publications for each year
+def get_pubs_event():
+    file = 'myDATA/01-publication_df_with_starting_years.csv'
+    publication_df = pd.read_csv(file)
+    num_colls_by_y = []
+    YEARS = [str(year) for year in range(1990,2019)]  
+    tot_auth = 0
+    for i in range(len(YEARS)):
+        y = YEARS[i]
+        # total number of publication in the given year
+        if(i==0):
+            num_colls_by_y.append(publication_df[y].sum())
+        else:
+            num_colls_by_y.append(publication_df[y].sum() + num_colls_by_y[i-1])
+
+    return num_colls_by_y
