@@ -4,12 +4,29 @@ from myLibraries.events import *
 
 YEARS = get_str_years_event()
 
+            ##### GENERAL DATA QUERIES #####
+
+# get the names of all authors along with theri IDs
+def get_all_COMP_names():
+    file = "myDATA/02-names.csv"
+    if(os.path.exists(file)):
+        return pd.read_csv(file)
+    return -1
+
+# get the names of all authors along with theri IDs
+def get_COMP_names_by_start_year(year):
+    file = "myDATA/02-names.csv"
+    if(os.path.exists(file)):
+        df = pd.read_csv(file)
+        df_y = df[df["start_year"] == year]
+        return df_y
+    return -1
 
             ##### PUBLICATION DATA QUERIES #####
 
 # get all publication data
 def get_all_pubs():
-    file = "myDATA/01-publication_df_with_starting_years.csv.csv"
+    file = "myDATA/01-publication_df_with_starting_years.csv"
     if(os.path.exists(file)):
         return pd.read_csv(file)
     return -1
@@ -71,7 +88,6 @@ def get_granted():
     if(os.path.exists(file)):
         return  pd.read_csv(file, index_col=0)
     return -1
-
 
 #return not granted data
 def get_not_granted():
