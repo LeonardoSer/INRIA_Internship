@@ -22,6 +22,29 @@ def get_COMP_names_by_start_year(year):
         return df_y
     return -1
 
+# get the ending publication year for each author
+def get_ending_years():
+    file = "myDATA/03-ending_years.csv"
+    if(os.path.exists(file)):
+        df = pd.read_csv(file)
+        return df
+    return -1
+
+# get the starting publication year for each author
+def get_starting_years():
+    file = "myDATA/03-starting_years.csv"
+    if(os.path.exists(file)):
+        df = pd.read_csv(file)
+        return df
+    return -1
+
+# get the starting and ending publication year for each author
+def get_starting_and_ending_years():
+    end_y = get_ending_years()
+    start_y = get_starting_years()
+    return pd.merge(start_y, end_y)
+
+
             ##### PUBLICATION DATA QUERIES #####
 
 # get all publication data
