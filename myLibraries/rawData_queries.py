@@ -27,5 +27,80 @@ def get_raw_COMP_publications_by_year(year):
 
     return data["search-results"]["entry"]
 
+JSON = get_all_raw_COMP_publications() # retrieve all json of computer science publication 
 
+# get all COMP publications for the given author
+def get_COMP_publications_by_authID(authID):
+    authID = str(authID)
+    auth_pubs = [] # publications already checked for the current author
+    for pub in JSON:
+        if("author" in pub):
+            auths = pub["author"] # authors of the current publication
+            
+            if(type(auths) == dict):
+                auth = auths
+                if(auth["authid"] == authID):
+                    if(pub not in auth_pubs):
+                        auth_pubs.append(pub)
+                
+            elif(type(auths) == list):
+                for auth in auths:
+                    if(auth["authid"] == authID):
+                        if(pub not in auth_pubs):
+                            auth_pubs.append(pub)
+    return auth_pubs
 
+# get all COMP publications for the given author and year
+def get_COMP_publication_by_authID_and_year(authID, year):
+    auth_pubs = get_COMP_publications_by_authID(authID)
+    pubs_y = []
+    for pub in auth_pubs:
+        if("prism:coverDate" in pub):
+            if (pub["prism:coverDate"][:4]==year):
+                pubs_y.append(pub)
+        elif("prism:coverDisplayDate" in pub):
+            if (pub["prism:coverDisplayDate"][-4:]==year):
+                pubs_y.append(pub)
+    return pubs_y
+
+# retrieve from raw data the starting year of an author in computer science
+def get_COMP_start_year_by_authID(authID):
+    auth_pubs = get_COMP_publications_by_authID(authID)
+    pubs_years = set()
+    for pub in auth_pubs:
+        if("prism:coverDate" in pub):
+            year = int(pub["prism:coverDate"][:4])
+            pubs_years.add(year)
+        elif("prism:coverDisplayDate" in pub):
+            year = int(pub["prism:coverDisplayDate"][-4:])
+            pubs_years.add(year)
+    
+    return min(pubs_years)
+
+# retrieve from raw data the ending year of an author in computer science
+def get_COMP_end_year_by_authID(authID):
+    auth_pubs = get_COMP_publications_by_authID(authID)
+    pubs_years = set()
+    for pub in auth_pubs:
+        if("prism:coverDate" in pub):
+            year = int(pub["prism:coverDate"][:4])
+            pubs_years.add(year)
+        elif("prism:coverDisplayDate" in pub):
+            year = int(pub["prism:coverDisplayDate"][-4:])
+            pubs_years.add(year)
+    
+    return max(pubs_years)
+
+# retrieve from raw data both the starting and ending year of an author in computer science
+def get_COMP_start_and_end_year_by_authID(authID):
+    auth_pubs = get_COMP_publications_by_authID(authID)
+    pubs_years = set()
+    for pub in auth_pubs:
+        if("prism:coverDate" in pub):
+            year = int(pub["prism:coverDate"][:4])
+            pubs_years.add(year)
+        elif("prism:coverDisplayDate" in pub):
+            year = int(pub["prism:coverDisplayDate"][-4:])
+            pubs_years.add(year)
+    
+    return min(pubs_years), max(pubs_years)

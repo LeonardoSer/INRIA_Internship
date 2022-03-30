@@ -5,14 +5,11 @@ from scipy.optimize import curve_fit
 from myLibraries.events import *
 from myLibraries.queries import *
 
-
-YEARS = get_str_years_event()
-
             ##### Theoretichal Trajectory #####
 
 # Theoretichal vertex trajectory for stretched exponential distribution
 def theoretical_func(x, a, b, start_x):
-    return a* pow((np.log(x/start_x) + 1), b)
+    return  pow((a*(np.log(x/start_x)) + 1), b)
 
 # Method to fit the theoretical trajectory to the given average trajectory 
 def fit_trajectory(xdata, ydata, start_x):
@@ -25,6 +22,8 @@ def fit_trajectory(xdata, ydata, start_x):
 
 
             ##### ERRORS FUNCTIONS FOR AVERAGE TRAJECTORIES #####
+
+YEARS = get_str_years_event()
 
 ## error function to minimize in order to find alpha* and beta*
     ## this function compare f* with real data 
