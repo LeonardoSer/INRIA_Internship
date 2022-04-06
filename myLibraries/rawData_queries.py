@@ -3,7 +3,7 @@ from myLibraries.events import *
 
             ##### RAW DATA QUERIES FOR COMPUTER SCIENCE#####
 
-YEARS =  get_str_years_event()
+YEARS =  get_str_years_event()[1:]
 
 # get all pubblication jsons
 def get_all_raw_COMP_publications():
@@ -63,44 +63,71 @@ def get_COMP_publication_by_authID_and_year(authID, year):
                 pubs_y.append(pub)
     return pubs_y
 
-# retrieve from raw data the starting year of an author in computer science
-def get_COMP_start_year_by_authID(authID):
-    auth_pubs = get_COMP_publications_by_authID(authID)
-    pubs_years = set()
-    for pub in auth_pubs:
-        if("prism:coverDate" in pub):
-            year = int(pub["prism:coverDate"][:4])
-            pubs_years.add(year)
-        elif("prism:coverDisplayDate" in pub):
-            year = int(pub["prism:coverDisplayDate"][-4:])
-            pubs_years.add(year)
-    
-    return min(pubs_years)
-
-# retrieve from raw data the ending year of an author in computer science
-def get_COMP_end_year_by_authID(authID):
-    auth_pubs = get_COMP_publications_by_authID(authID)
-    pubs_years = set()
-    for pub in auth_pubs:
-        if("prism:coverDate" in pub):
-            year = int(pub["prism:coverDate"][:4])
-            pubs_years.add(year)
-        elif("prism:coverDisplayDate" in pub):
-            year = int(pub["prism:coverDisplayDate"][-4:])
-            pubs_years.add(year)
-    
-    return max(pubs_years)
-
-# retrieve from raw data both the starting and ending year of an author in computer science
+# get start and end year of COMP authors given their id
 def get_COMP_start_and_end_year_by_authID(authID):
     auth_pubs = get_COMP_publications_by_authID(authID)
     pubs_years = set()
     for pub in auth_pubs:
         if("prism:coverDate" in pub):
-            year = int(pub["prism:coverDate"][:4])
+            if(type(pub["prism:coverDate"]) == str):
+                year = int(pub["prism:coverDate"][:4])
+            else:
+                year = int(pub["prism:coverDate"][0][:4])
             pubs_years.add(year)
         elif("prism:coverDisplayDate" in pub):
-            year = int(pub["prism:coverDisplayDate"][-4:])
+            if(type(pub["prism:coverDisplayDate"]) == str):
+                year = int(pub["prism:coverDisplayDate"][-4:])
+            else:
+                year = int(pub["prism:coverDisplayDate"][0][-4:])
             pubs_years.add(year)
     
-    return min(pubs_years), max(pubs_years)
+    if(pubs_years != set()):
+        return min(pubs_years), max(pubs_years)
+    
+    return 0,0
+
+# return the publication trajectory for each the given author
+def get_COMP_publication_traj_size_by_authID(authID):
+    auth_pubs = get_COMP_publications_by_authID(authID)
+    
+    publication_traj = [0 for i in YEARS]
+
+    i = 0
+    for y in YEARS:
+        for pub in auth_pubs:
+            if("prism:coverDate" in pub):
+                if(type(pub["prism:coverDate"]) == str):
+                    year = int(pub["prism:coverDate"][:4])
+                else:
+                    year = int(pub["prism:coverDate"][0][:4])
+            elif("prism:coverDisplayDate" in pub):
+                if(type(pub["prism:coverDisplayDate"]) == str):
+                    year = int(pub["prism:coverDisplayDate"][-4:])
+                else:
+                    year = int(pub["prism:coverDisplayDate"][0][-4:])
+
+            if(str(year) == y):
+                publication_traj[i] = publication_traj[i] + 1 
+                
+        i += 1
+
+    return publication_traj
+
+# return the maximum hole size for an author
+def get_COMP_max_hole_size_by_authID(authID):
+    traj = get_COMP_publication_traj_size_by_authID(authID)
+    
+    max_hole = 0
+    c=0
+    
+    for deg in traj:
+        if(deg==0):
+            c += 1
+        else:
+            if(c > max_hole):
+                max_hole = c
+            c = 0   
+    if(c > max_hole):
+                max_hole = c
+
+    return max_hole

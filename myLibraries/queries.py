@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+import numpy as np
 from myLibraries.events import *
 
 YEARS = get_str_years_event()
@@ -47,52 +48,58 @@ def get_starting_and_ending_years():
 
             ##### PUBLICATION DATA QUERIES #####
 
-# get all publication data
+'''# get all publication data
 def get_all_pubs():
     file = "myDATA/01-publication_df_with_starting_years.csv"
     if(os.path.exists(file)):
         return pd.read_csv(file)
-    return -1
-
-
+    return -1'''
+    
             ##### COLLABORATION DATA QUERIES #####
 
 # get all collaboration data
 def get_all_collabs():
-    file = "myDATA/00-collaboration_df_with_starting_years.csv"
+    file = "myDATA/00-collaboration_df.csv"
     if(os.path.exists(file)):
         return pd.read_csv(file)
     return -1
 
 # get all collaboration data for given hole size
 def get_all_collabs_by_hole_size(size):
-    file = "myDATA/collabs_by_hole_size/" + str(size) + ".csv"
-    if(os.path.exists(file)):
-        return pd.read_csv(file)
-    return -1
+    df = get_all_collabs()
+    df = df[df["max_hole_size"] <= size]
+    return df
 
 # get all collaboration data for given hole size and starting year
 def get_collabs_by_hole_size(size, start_y):
-    file = "myDATA/collabs_by_hole_size_and_start_year/" 
-    file += str(size) + "_hole_size_splitted/"
-    file += str(start_y) + "_collabs_by_starting_year.csv"
     
-    if(os.path.exists(file)):
-        return pd.read_csv(file)
-    return -1
+    df = get_all_collabs_by_hole_size(size) # get authors by HS
+    df = df[df["start_year"] == int(start_y)] # get all raws with the given starting year
+    
+    # remove from it the usless years
+    preceding_years = YEARS[1:YEARS.index(str(start_y))]
+    df = df[df.columns.difference(preceding_years)]
+    
+    return df
 
 # return the average trajectory for the given hole size and starting publication year
 def get_avg_trajectories(events, hole_size, start_y):
+    start_y = int(start_y) + 1
     
     df_y = get_collabs_by_hole_size(hole_size, start_y)
-    j=YEARS.index(start_y)
+    
+    j=YEARS.index(str(start_y))
         
     x,y = [], []
     for i in df_y:
-        if(i!="ID"):
+        if(i in YEARS):
             y.append(df_y[i].mean())
             x.append(events[j])
             j+=1
+    
+    x.insert(0, events[YEARS.index(str(start_y))-1])
+    y.insert(0,1)
+    
     return x, y
 
 
