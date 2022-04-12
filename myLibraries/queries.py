@@ -109,21 +109,21 @@ def get_avg_trajectories(events, hole_size, start_y):
 def get_all_granting_data():
     file = "myDATA/grantingDATA/00-granting_DATA.csv"
     if(os.path.exists(file)):
-        return  pd.read_csv(file, index_col=0)
+        return  pd.read_csv(file)
     return -1
 
 #return granted data
 def get_granted():
     file = "myDATA/grantingDATA/01-granted.csv"
     if(os.path.exists(file)):
-        return  pd.read_csv(file, index_col=0)
+        return  pd.read_csv(file)
     return -1
 
 #return not granted data
 def get_not_granted():
     file = "myDATA/grantingDATA/01-not_granted.csv"
     if(os.path.exists(file)):
-        return  pd.read_csv(file, index_col=0)
+        return  pd.read_csv(file)
     return -1
 
 # return trajectories for focal and control of the given group along with their IDs and the granting year
@@ -131,22 +131,34 @@ def get_focal_control_traj_byGroup(groupID):
     foc_con = get_all_granting_data()
     
     focal = foc_con.loc[(foc_con['group'] == groupID) & (foc_con['focal'] ==1)]
-    focal_ID = str(focal.iloc[0]["auth.id"])
+    focal_ID = str(focal.iloc[0]["ID"])
+    focal_start_y = focal["start_year"].values[0]
     grant_year = str(focal.iloc[0]["anr_year"])
 
     control = foc_con.loc[(foc_con['group'] == groupID) & (foc_con['focal'] ==0)]
-    control_ID = str(control.iloc[0]["auth.id"])
-
-    y_focal, y_control = [], []
-    for i in YEARS:
+    control_ID = str(control.iloc[0]["ID"])
+    control_start_y = control["start_year"].values[0]
+    
+    y_focal, y_control = [0], [0]
+    for i in YEARS[1:]:
         j=YEARS.index(i)
-        y_focal.append(focal[i])
-        y_control.append(control[i])
         
+        if(i==focal_start_y):
+            y_focal.append(1)
+        else:
+            y_focal.append(focal[i])
+            
+        if(i==control_start_y):
+            y_control.append(1)
+        else:
+            y_control.append(control[i])
+            
     return focal_ID, control_ID, y_focal, y_control, grant_year
 
 # return average trajectory for focals by starting year
 def get_focals_avg_trajectories(events, start_y):
+    
+    start_y = str(int(start_y)+1)
     
     df_y = get_granted()
     df_y = df_y[df_y["start_year"]==int(start_y)]
@@ -161,11 +173,16 @@ def get_focals_avg_trajectories(events, start_y):
         y.append(df_y[i].mean())
         x.append(events[j])
         j+=1
+    
+    x.insert(0, events[YEARS.index(str(start_y))-1])
+    y.insert(0,1)
         
     return x, y
 
 # get average trajectory for controls by starting year
 def get_controls_avg_trajectories(events, start_y):
+    
+    start_y = str(int(start_y)+1)
     
     df_y = get_not_granted()
     df_y = df_y[df_y["start_year"]==int(start_y)]
@@ -180,5 +197,8 @@ def get_controls_avg_trajectories(events, start_y):
         y.append(df_y[i].mean())
         x.append(events[j])
         j+=1
+    
+    x.insert(0, events[YEARS.index(str(start_y))-1])
+    y.insert(0,1)
         
     return x, y

@@ -95,6 +95,7 @@ def get_COMP_publication_traj_size_by_authID(authID):
     i = 0
     for y in YEARS:
         for pub in auth_pubs:
+            year  = ""
             if("prism:coverDate" in pub):
                 if(type(pub["prism:coverDate"]) == str):
                     year = int(pub["prism:coverDate"][:4])
