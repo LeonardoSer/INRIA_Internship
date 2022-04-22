@@ -20,7 +20,7 @@ def get_allEvents(events):
 
 # return an array with the total number of collaboration for each year
 def get_collabs_event():
-    file = 'myDATA/00-collaboration_df.csv'
+    file = '../myDATA/00-collaboration_df.csv'
     collaborations_df = pd.read_csv(file)
     num_colls_by_y = []
     for i in range(len(YEARS)-1):
@@ -33,7 +33,7 @@ def get_collabs_event():
 
 # return an array with the total number of authors for each year
 def get_auths_event():
-    file = 'myDATA/00-collaboration_df.csv'
+    file = '../myDATA/00-collaboration_df.csv'
     collaborations_df = pd.read_csv(file)
     num_auths_by_y = []
     num_new_auths_by_y = []
@@ -53,7 +53,7 @@ def get_auths_event():
 
 '''# return an array with the total number of publications for each year
 def get_pubs_event():
-    file = 'myDATA/01-publication_df.csv'
+    file = '../myDATA/01-publication_df.csv'
     publication_df = pd.read_csv(file)
     num_pubs_by_y = []
     YEARS = [str(year) for year in range(1990,2019)]  

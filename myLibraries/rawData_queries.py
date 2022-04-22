@@ -9,7 +9,7 @@ YEARS =  get_str_years_event()[1:]
 def get_all_raw_COMP_publications():
     all_data = []
     for y in YEARS:
-        path = 'COMP/COMP/COMP-'+y+'.json'
+        path = '../COMP/COMP/COMP-'+y+'.json'
 
         with open(path, 'rb') as f:
             data = json.load(f)
@@ -20,7 +20,7 @@ def get_all_raw_COMP_publications():
 
 # get raw pubblication jsons for the given publication year
 def get_raw_COMP_publications_by_year(year):
-    path = 'COMP/COMP/COMP-'+str(year)+'.json'
+    path = '../COMP/COMP/COMP-'+str(year)+'.json'
 
     with open(path, 'rb') as f:
         data = json.load(f)
@@ -118,6 +118,22 @@ def get_COMP_publication_traj_size_by_authID(authID):
 def get_COMP_max_hole_size_by_authID(authID):
     traj = get_COMP_publication_traj_size_by_authID(authID)
     
+    # get end of the trajectory
+    i = len(traj)-1
+    end_idx = len(traj)
+    while traj[i]==0:
+        end_idx = i
+        i -= 1
+
+    # get start of the trajectory
+    i = 0
+    start_idx = 0 
+    while traj[i] == 0:
+        i += 1
+        start_idx = i
+        
+    traj = traj[start_idx:end_idx] # remove the beginning and endinfìg holes
+    
     max_hole = 0
     c=0
     
@@ -132,3 +148,39 @@ def get_COMP_max_hole_size_by_authID(authID):
                 max_hole = c
 
     return max_hole
+
+# return the maximum number of years in which an author has been active
+def get_COMP_max_consecutive_pubs_num_by_authID(authID):
+    
+    traj = get_COMP_publication_traj_size_by_authID(authID)
+
+    # get end of the trajectory
+    i = len(traj)-1
+    end_idx = len(traj)
+    while traj[i]==0:
+        end_idx = i
+        i -= 1
+
+    # get start of the trajectory
+    i = 0
+    start_idx = 0 
+    while traj[i] == 0:
+        i += 1
+        start_idx = i
+        
+    traj = traj[start_idx:end_idx] # remove the beginning and endinfìg holes
+   
+    max_consecutive = 0
+    c=0
+    
+    for deg in traj:
+        if(deg!=0):
+            c += 1
+        else:
+            if(c > max_consecutive):
+                max_consecutive = c
+            c = 0   
+    if(c > max_consecutive):
+                max_consecutive = c
+
+    return max_consecutive
