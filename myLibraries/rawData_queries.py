@@ -118,6 +118,14 @@ def get_COMP_publication_traj_size_by_authID(authID):
 def get_COMP_max_hole_size_by_authID(authID):
     traj = get_COMP_publication_traj_size_by_authID(authID)
     
+    # return 0 in case of empty trajectory
+    stop = True
+    for i in traj:
+        if(i!=0):
+            stop=False
+    if(stop):
+        return 0 
+
     # get end of the trajectory
     i = len(traj)-1
     end_idx = len(traj)
@@ -153,6 +161,14 @@ def get_COMP_max_hole_size_by_authID(authID):
 def get_COMP_max_consecutive_pubs_num_by_authID(authID):
     
     traj = get_COMP_publication_traj_size_by_authID(authID)
+    
+    # return 0 in case of empty trajectory
+    stop = True
+    for i in traj:
+        if(i!=0):
+            stop=False
+    if(stop):
+        return 0 
 
     # get end of the trajectory
     i = len(traj)-1
