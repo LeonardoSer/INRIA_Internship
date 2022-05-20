@@ -18,7 +18,7 @@ def poly_theoretical_func(x, a, b, start_x):
 # Method to fit the theoretical trajectory to the given average trajectory 
 def fit_trajectory(xdata, ydata):
     
-    popt, pcov = curve_fit(lambda x, a, b: theoretical_func(x, a, b, xdata[0]), xdata, ydata, maxfev=5000, bounds=(0, [np.inf, np.inf]))
+    popt, pcov = curve_fit(lambda x, a, b: theoretical_func(x, a, b, xdata[0]), xdata, ydata, maxfev=5000, bounds=([0, 1], [np.inf, np.inf]))
     alpha = popt[0]
     beta = popt[1]
 

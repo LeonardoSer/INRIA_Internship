@@ -14,7 +14,7 @@ def get_all_COMP_names():
         return pd.read_csv(file)
     return -1
 
-# get the names of all authors along with theri IDs
+# get the names of all authors along with their IDs by starting year
 def get_COMP_names_by_start_year(year):
     file = "../myDATA/02-names.csv"
     if(os.path.exists(file)):
@@ -64,16 +64,19 @@ def get_all_collabs():
         return pd.read_csv(file)
     return -1
 
-# get all collaboration data for given hole size
-def get_all_collabs_by_hole_size(size):
+# get all collaboration data for given hole size, activity and minumum number of publication 
+def get_all_collabs_by_hole_size(size, activity=0, minPubs=0):
     df = get_all_collabs()
     df = df[df["max_hole_size"] <= size]
+    df = df[df["activity"] >= activity]
+    df = df[df["tot_pubs"] >= minPubs]
+
     return df
 
-# get all collaboration data for given hole size and starting year
-def get_collabs_by_hole_size(size, start_y):
+# get all collaboration data for given hole size, activity, minumum number of publication and starting year
+def get_collabs_by_hole_size(size, start_y, activity=0, minPubs=0):
     
-    df = get_all_collabs_by_hole_size(size) # get authors by HS
+    df = get_all_collabs_by_hole_size(size, activity, minPubs) # get authors by HS
     df = df[df["start_year"] == int(start_y)] # get all raws with the given starting year
     
     # remove from it the usless years
@@ -82,11 +85,11 @@ def get_collabs_by_hole_size(size, start_y):
     
     return df
 
-# return the average trajectory for the given hole size and starting publication year
-def get_avg_trajectories(events, hole_size, start_y, section=0):
+# return the average trajectory for the given hole size, activity, minumum number of publication  and starting publication year
+def get_avg_trajectories(events, hole_size, start_y, section=0, activity=0, minPubs=0):
     start_y = int(start_y) + 1
     
-    df_y = get_collabs_by_hole_size(hole_size, start_y)
+    df_y = get_collabs_by_hole_size(hole_size, start_y, activity, minPubs)
     
     j=YEARS.index(str(start_y))
         
@@ -133,7 +136,7 @@ def get_not_granted():
 def get_all_groups():
     return get_all_granting_data()["group"]
 
-# return thos focaal control groups of which memeber have a distance less equal than the given one between their starting years
+# return those focal+control groups of which memeber have a distance less equal than the given one between their starting years
 def get_groups_by_dist(d):
     foc_con = get_all_granting_data() # funding data for which we have collaboration data and for each focal we have a control
     granted = get_granted() # get just the granted data
@@ -178,7 +181,9 @@ def get_focal_control_traj_byGroup(groupID):
             
     return focal_ID, control_ID, y_focal, y_control, grant_year
 
-# return average trajectory for focals by starting year
+# return average trajectory for focals by starting year,
+# choose the subset of group (of those focal + control with distance 
+# less than d in their starting years) by the 'start_y_dist' parameter
 def get_focals_avg_trajectories(events, start_y, start_y_dist=-1):
     
     if(start_y_dist==-1):
@@ -208,7 +213,9 @@ def get_focals_avg_trajectories(events, start_y, start_y_dist=-1):
         
     return x, y
 
-# get average trajectory for controls by starting year
+# get average trajectory for controls by starting year,
+# choose the subset of group (of those focal + control with distance 
+# less than d in their starting years) by the 'start_y_dist' parameter
 def get_controls_avg_trajectories(events, start_y, start_y_dist=-1):
     
     if(start_y_dist==-1):
