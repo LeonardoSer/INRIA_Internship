@@ -120,23 +120,27 @@ def get_all_granting_data():
 
 #return granted data
 def get_granted():
-    file = "../myDATA/grantingDATA/01-granted.csv"
+    file = "../myDATA/grantingDATA/00-granting_DATA.csv"
     if(os.path.exists(file)):
-        return  pd.read_csv(file)
+        df = pd.read_csv(file)
+        df = df[df["focal"]==1]
+        return df
     return -1
 
 #return not granted data
 def get_not_granted():
-    file = "../myDATA/grantingDATA/01-not_granted.csv"
+    file = "../myDATA/grantingDATA/00-granting_DATA.csv"
     if(os.path.exists(file)):
-        return  pd.read_csv(file)
+        df = pd.read_csv(file)
+        df = df[df["focal"]==0]
+        return df
     return -1
 
 # return all group IDs 
 def get_all_groups():
     return get_all_granting_data()["group"]
 
-# return those focal+control groups of which memeber have a distance less equal than the given one between their starting years
+# return those focal+control groups of which memeber have a distance equal than the given one between their starting years
 def get_groups_by_dist(d):
     foc_con = get_all_granting_data() # funding data for which we have collaboration data and for each focal we have a control
     granted = get_granted() # get just the granted data
@@ -147,7 +151,7 @@ def get_groups_by_dist(d):
         foc_start_y = granted[granted["group"] == g]["start_year"].values[0]
         con_start_y = not_granted[not_granted["group"] == g]["start_year"].values[0]
         dist = abs(foc_start_y - con_start_y)
-        if(dist <= d):
+        if(dist == d):
             chosen_groups.append(g)
     
     return chosen_groups    
