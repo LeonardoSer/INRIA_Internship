@@ -72,7 +72,7 @@ def broken_powerlaw(x,c1, a1,a2, xc):
 
 def xc_fit_broken_powerlaw(xdata, ydata, xc):
     
-    popt, pcov = curve_fit(lambda x,c1, a1,a2: broken_powerlaw(x,c1, a1,a2, xc), xdata, ydata)
+    popt, pcov = curve_fit(lambda x,c1, a1,a2: broken_powerlaw(x,c1, a1,a2, xc), xdata, ydata, maxfev=50000)
     c1 = popt[0]
     a1 = popt[1]
     a2 = popt[2]
@@ -80,3 +80,38 @@ def xc_fit_broken_powerlaw(xdata, ydata, xc):
     c2 = (c1*pow(xc, -a1))/pow(xc, -a2)
 
     return broken_powerlaw(xdata, c1, a1, a2, xc), c1, c2, a1, a2, xc
+
+
+def bestBrokenPowelaw(x,y): 
+        # Broken powerlaw fit
+        x,y = x, y
+        y = [a / sum(y) for a in y] # normalization
+
+        xcs, c1s, c2s, a1s, a2s, errs = x, [], [], [], [], []
+
+        for xc in xcs:
+                dd, c1, c2, a1, a2, xc = xc_fit_broken_powerlaw(x,y, xc)
+
+                err = sum([pow(abs(dd[i] - y[i]),2) for i in range(len(x))])
+                
+                c1s.append(c1)
+                c2s.append(c2)
+                a1s.append(a1)
+                a2s.append(a2)
+                errs.append(err)
+                # draw("broken powerlaw fit", "#_collaborations", "#_authors", ['real', 'fit'], [x, x], [y, dd])
+                # draw("loglog broken powerlaw fit", "log(#_collaborations)", "log(#_authors)", ['real', 'fit'], [np.log(x), np.log(x)], [np.log(y), np.log(dd)])
+
+        results = pd.DataFrame({"xc": xcs, "c1": c1s, "c2": c2s, "a1": a1s, "a2": a2s, "err": errs})
+
+        # sorted my err
+        best = results.sort_values(by="err",  ascending=True).loc[5]
+        xc = best["xc"]
+        c1 = best["c1"]
+        a1 = best["a1"]
+        a2 = best["a2"]
+
+        dd = broken_powerlaw(x, c1, a1, a2, xc)
+        # print("broken DD fitting: \n",best)
+
+        return dd, best
