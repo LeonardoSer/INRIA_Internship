@@ -48,12 +48,12 @@ def get_starting_and_ending_years():
 
             ##### PUBLICATION DATA QUERIES #####
 
-'''# get all publication data
+# get all publication data
 def get_all_pubs():
-    file = "../myDATA/01-publication_df_with_starting_years.csv"
+    file = "../myDATA/00-publication_df.csv"
     if(os.path.exists(file)):
         return pd.read_csv(file)
-    return -1'''
+    return -1
     
             ##### COLLABORATION DATA QUERIES #####
 
