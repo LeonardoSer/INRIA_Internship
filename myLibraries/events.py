@@ -22,6 +22,7 @@ def get_allEvents(events):
 def get_collabs_event():
     file = '../myDATA/00-collaboration_df.csv'
     collaborations_df = pd.read_csv(file)
+    
     num_colls_by_y = []
     for i in range(len(YEARS)-1):
         y = YEARS[1:][i]

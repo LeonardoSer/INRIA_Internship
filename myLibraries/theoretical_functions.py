@@ -54,7 +54,25 @@ def fit_powerlaw(xdata, ydata):
     c = popt[0]
     gamma = popt[1]
 
-    print('c:', c, ', gamma:', gamma)
+    print('c:', c, ', exp:', gamma)
+    
+    return powerlaw(xdata, c, gamma), c, gamma
+
+# powerlaw 
+def powerlaw_exp_cutoff(x,c, gamma, sigma):
+    y = []
+    for i in range(len(x)):
+        y.append(c*pow(x[i], - gamma) * pow(sigma, x[i]))
+   
+    return y
+
+def fit_powerlaw_exp_cutoff(xdata, ydata):
+    popt, pcov = curve_fit(powerlaw_exp_cutoff, xdata, ydata)
+    c = popt[0]
+    gamma = popt[1]
+    sigma = popt[2]
+
+    print('c:', c, ', exp:', gamma, ', cutoff:', sigma)
     
     return powerlaw(xdata, c, gamma), c, gamma
 
