@@ -58,23 +58,22 @@ def fit_powerlaw(xdata, ydata):
     
     return powerlaw(xdata, c, gamma), c, gamma
 
-# powerlaw 
+# powerlaw_exp_cutoff 
 def powerlaw_exp_cutoff(x,c, gamma, sigma):
     y = []
     for i in range(len(x)):
         y.append(c*pow(x[i], - gamma) * pow(sigma, x[i]))
-   
     return y
 
 def fit_powerlaw_exp_cutoff(xdata, ydata):
-    popt, pcov = curve_fit(powerlaw_exp_cutoff, xdata, ydata)
+    popt, pcov = curve_fit(powerlaw_exp_cutoff, xdata, ydata, bounds=(0, [np.inf, np.inf, 1]))
     c = popt[0]
     gamma = popt[1]
     sigma = popt[2]
 
     print('c:', c, ', exp:', gamma, ', cutoff:', sigma)
     
-    return powerlaw(xdata, c, gamma), c, gamma
+    return powerlaw_exp_cutoff(xdata, c, gamma, sigma), c, gamma, sigma
 
 # broken powerlaw
 def broken_powerlaw(x,c1, a1,a2, xc):
