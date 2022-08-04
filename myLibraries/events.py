@@ -58,7 +58,7 @@ def get_pubs_event():
     publication_df = pd.read_csv(file)
     num_pubs_by_y = []
     YEARS = [str(year) for year in range(1990,2019)]  
-    for i in range(len(YEARS)-1):
+    for i in range(len(YEARS)):
         y = YEARS[i]
         # total number of publication in the given year
         if(i==0):
@@ -129,7 +129,8 @@ def get_pubs_eventACTIVE(hs, act, mPubs):
     
     num_pubs_by_y = []
     YEARS = [str(year) for year in range(1990,2019)]  
-    for i in range(len(YEARS)-1):
+    for i in range(len(YEARS)):
+        
         y = YEARS[i]
         # total number of publication in the given year
         if(i==0):
