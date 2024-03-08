@@ -26,8 +26,8 @@ The project aimed to:
 This internship resulted in a comprehensive analysis of the evolution of social graphs, particularly focusing on scientific collaboration networks. The findings contribute to our understanding of how individual nodes' degrees evolve over time within scale-free networks.
 
 ### Documentation
-- Master Thesis: https://github.com/LeonardoSer/INRIA_Internship/blob/main/documentation/ReportFinale.pdf
-- Thesis Presentation: https://github.com/LeonardoSer/INRIA_Internship/blob/main/documentation/defense.pdf
+- Master Thesis: [Link Text](thesis.pdf)
+- Thesis Presentation: [Link Text](Presentation.pdf)
 
 Supervisors
 

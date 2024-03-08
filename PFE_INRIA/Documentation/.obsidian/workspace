@@ -1,0 +1,102 @@
+{
+  "main": {
+    "id": "7b06f4a0940481fc",
+    "type": "split",
+    "children": [
+      {
+        "id": "7bf7f43f8ac85948",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "Documentation/DOC.md",
+            "mode": "preview"
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "e281151d9f75f0a2",
+    "type": "split",
+    "children": [
+      {
+        "id": "f4f3b46d6eaf35d9",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "dfcd74a39bad1a2a",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "075f852cff075057",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 398.0068016052246
+  },
+  "right": {
+    "id": "82d08cfab804be0f",
+    "type": "split",
+    "children": [
+      {
+        "id": "bf96124c2fb58dd7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f4f693a03346af0e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Documentation/DOC.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "7bf7f43f8ac85948",
+  "lastOpenFiles": [
+    "Documentation/DOC.md",
+    "Documentation/DOC.pdf",
+    "Untitled.md",
+    "references/trajectories.pdf",
+    "Documentation/Assets/Pasted image 20211214114754.png",
+    "Pasted image 20211216132453.png",
+    "Dow.pdf",
+    "Documentation/Assets/Pasted image 20211214140734.png",
+    "Documentation/Assets/Pasted image 20211214140707.png",
+    "Documentation/Assets/Pasted image 20211129151115.png"
+  ]
+}
