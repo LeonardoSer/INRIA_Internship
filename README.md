@@ -9,25 +9,25 @@ Networks represent a fundamental structure in both natural and human-made system
 
 The primary dataset for this project includes collaboration data from 258,145 French computer science authors from 1990 to 2018, detailing their publications and co-authorships. The challenges faced in this work include:
 
-    Ensuring data accuracy and managing outliers to prevent skewed analyses.
-    Overcoming the lack of detailed temporal data, with only the year of collaboration available for analysis.
-    Developing robust metrics to analyze vertex trajectories within the network, where a vertex trajectory represents the evolution of an author's collaborations over time.
+- Ensuring data accuracy and managing outliers to prevent skewed analyses.
+- Overcoming the lack of detailed temporal data, with only the year of collaboration available for analysis.
+- Developing robust metrics to analyze vertex trajectories within the network, where a vertex trajectory represents the evolution of an author's collaborations over time.
 
 ## Goals
 
 The project aimed to:
 
-    Familiarize with the collected data by constructing the underlying collaboration network.
-    Investigate the network's mathematical properties and their evolution, focusing on vertex trajectories and degree distribution.
-    Develop a mathematical model capable of generating similar graphs to understand and predict the evolution of such networks.
+- Familiarize with the collected data by constructing the underlying collaboration network.
+- Investigate the network's mathematical properties and their evolution, focusing on vertex trajectories and degree distribution.
+- Develop a mathematical model capable of generating similar graphs to understand and predict the evolution of such networks.
 
 ## Outcomes
 
 This internship resulted in a comprehensive analysis of the evolution of social graphs, particularly focusing on scientific collaboration networks. The findings contribute to our understanding of how individual nodes' degrees evolve over time within scale-free networks.
 
 ### Documentation
-- Master Thesis: [Link Text](thesis.pdf)
-- Thesis Presentation: [Link Text](Presentation.pdf)
+- Master Thesis: [Thesis](thesis.pdf)
+- Thesis Presentation: [Presentation](Presentation.pdf)
 
 Supervisors
 
