@@ -4,8 +4,11 @@
   <img src="https://github.com/LeonardoSer/INRIA_Internship/assets/80627086/d3061216-044d-45fb-83b5-eec7fd769b88" alt="Inria" width="200">
 </p>
 
-Welcome to my repository for the "Evolution of Social Graphs Over Time" project, conducted during my internship and projet de fin d’étude (PFE) at INRIA, Nice (FR), within the COATI team. This project explores the dynamic nature of social networks through the lens of scale-free networks, focusing on the evolution of collaboration networks among French computer science researchers.
-Motivations
+Welcome to my repository for the "Evolution of Social Graphs Over Time" project, conducted during my internship and projet de fin d’étude (PFE) at INRIA, Nice (FR), within the COATI team. 
+
+This project explores the dynamic nature of social networks through the lens of scale-free networks, focusing on the evolution of collaboration networks among French computer science researchers.
+
+## Motivations
 
 Networks represent a fundamental structure in both natural and human-made systems, such as the World Wide Web, social networks, and scientific collaboration networks. These systems, characterized by their scale-free nature, follow a power law distribution with exponential cut-off, indicating that nodes preferentially attach to others with a high degree of connections. Understanding these networks' evolution over time offers insights into the underlying self-organizing phenomena that govern large network development.
 
