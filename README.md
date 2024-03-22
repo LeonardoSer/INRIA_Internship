@@ -1,10 +1,10 @@
 # Evolution of Social Graphs Over Time - INRIA Internship
 
+Welcome to my repository for the "Evolution of Social Graphs Over Time" project, conducted during my internship and projet de fin d’étude (PFE) at INRIA, Nice (FR), within the COATI team. 
+
 <p align="center">
   <img src="https://github.com/LeonardoSer/INRIA_Internship/assets/80627086/d3061216-044d-45fb-83b5-eec7fd769b88" alt="Inria" width="200">
 </p>
-
-Welcome to my repository for the "Evolution of Social Graphs Over Time" project, conducted during my internship and projet de fin d’étude (PFE) at INRIA, Nice (FR), within the COATI team. 
 
 This project explores the dynamic nature of social networks through the lens of scale-free networks, focusing on the evolution of collaboration networks among French computer science researchers.
 
